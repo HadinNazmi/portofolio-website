@@ -62,7 +62,7 @@ html {
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0.7rem 0.7rem 0.7rem 1.3rem;
   background: var(--nav-bg);
@@ -318,12 +318,11 @@ html {
 /* ===== Sections (generic) ===== */
 section {
   padding: 4rem 3rem;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 section.hero,
-section.about,
 section.projects,
 section.experience,
 section.contact {
@@ -331,6 +330,14 @@ section.contact {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  scroll-snap-align: start;
+}
+
+section.about {
+  display: flex;
+  flex-direction: column;
+  padding-top: 6rem;
+  padding-bottom: 4rem;
   scroll-snap-align: start;
 }
 
@@ -394,7 +401,7 @@ section.contact {
   margin-top: 0.5rem;
 }
 
-/* ===== Projects ===== */
+/* ===== Projects (card horizontal, seragam) ===== */
 .project-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -403,17 +410,28 @@ section.contact {
 }
 
 .project-card {
+  display: flex;
+  height: 180px;
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  background: var(--bg-alt);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme='dark'] .project-card:hover {
+  background: #1c1c1c;
 }
 
 .project-image {
-  width: 100%;
-  height: 160px;
+  width: 180px;
+  flex-shrink: 0;
   background: var(--bg-alt);
 }
 
@@ -421,10 +439,15 @@ section.contact {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .project-body {
-  padding: 1.5rem;
+  flex: 1;
+  min-width: 0;
+  padding: 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .project-header {
@@ -434,18 +457,110 @@ section.contact {
   gap: 0.5rem;
 }
 
+.project-header h3 {
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
 .project-period {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.project-desc {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  margin: 0.4rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.project-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.project-btn {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  text-decoration: none;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
   white-space: nowrap;
 }
 
-.project-link {
-  display: inline-block;
-  margin-top: 0.8rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--accent);
+.project-btn-disabled {
+  background: var(--badge-bg);
+  color: var(--text-muted);
+}
+
+/* ===== Achievements list (di dalam About) ===== */
+.achievements-list {
+  margin-left: 1.2rem;
+  margin-top: 1rem;
+}
+
+.achievements-list li {
+  margin-bottom: 0.5rem;
+}
+
+/* ===== Achievements collage (bulat, ukuran variatif) ===== */
+.achievements-block {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.achievements-list {
+  flex: 1;
+  min-width: 240px;
+  margin-left: 1.2rem;
+}
+
+.achievements-list li {
+  margin-bottom: 0.5rem;
+}
+
+.achievements-photos {
+  flex: 1;
+  min-width: 240px;
+  position: relative;
+  height: 320px;
+}
+
+.polaroid {
+  position: absolute;
+  width: 120px;
+  background: #ffffff;
+  padding: 7px 7px 20px;
+  border-radius: 4px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  transform: translateY(25px) rotate(var(--rot, 0deg)) scale(0.9);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.polaroid-visible {
+  opacity: 1;
+  transform: translateY(0) rotate(var(--rot, 0deg)) scale(1);
+}
+
+.polaroid img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+  border-radius: 2px;
 }
 
 /* ===== Experience (clickable timeline) ===== */
@@ -608,16 +723,6 @@ section.contact {
   display: block;
 }
 
-/* ===== Achievements (di dalam About) ===== */
-.achievements-list {
-  margin-left: 1.2rem;
-  margin-top: 1rem;
-}
-
-.achievements-list li {
-  margin-bottom: 0.5rem;
-}
-
 /* ===== Contact ===== */
 .contact-links {
   display: flex;
@@ -637,13 +742,21 @@ section.contact {
     scroll-snap-type: none;
   }
 
+  .navbar-wrap {
+    padding: 0.8rem 1rem 0;
+  }
+
   .navbar {
-    padding: 1rem 1.5rem;
+    padding: 0.6rem 0.6rem 0.6rem 1rem;
     flex-wrap: wrap;
-    gap: 0.8rem;
+    gap: 0.6rem;
+    border-radius: 20px;
   }
 
   .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
     gap: 1rem;
     font-size: 0.85rem;
   }
@@ -683,4 +796,18 @@ section.contact {
   .gallery-grid {
     columns: 1 100%;
   }
+
+.achievements-block {
+    flex-direction: column;
+  }
+
+  .achievements-photos {
+    width: 100%;
+    height: 260px;
+  }
+
+  .polaroid {
+    width: 95px;
+  }
+
 }

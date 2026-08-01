@@ -28,7 +28,7 @@ const projects = [
   {
     title: "Sigap — Sistem Identifikasi Gangguan Awal Penyakit",
     period: "2025",
-    description: "Chatbot berbasis NLP untuk diagnosis penyakit, menggunakan  LLM berbasis RAG.",
+    description: "Chatbot berbasis NLP untuk diagnosis penyakit, menggunakan LLM berbasis RAG.",
     tech: ["Python", "Flask", "React", "NLP"],
     image: "/projects/nadi.png",
     link: "",
@@ -37,7 +37,7 @@ const projects = [
     title: "Prediksi Curah Hujan Ekstrem Indonesia",
     period: "2026",
     description: "Model prediksi curah hujan ekstrem berbasis Random Forest untuk mendukung sistem peringatan dini banjir. Dilatih menggunakan data historis curah hujan, klimatologi, dan variabel meteorologi dari stasiun BMKG.",
-    tech: ["Python", "Machine Learning", "Random Forest"],
+    tech: ["Python", "Machine Learning", "LLM", "RAG"],
     image: "/projects/rainfall.png",
     link: "",
   },
@@ -46,21 +46,21 @@ const projects = [
     period: "2025",
     description: "Merancang konsep gameplay, alur cerita, dan desain level game 3D menggunakan Unity, termasuk perencanaan fitur dan pengelolaan backlog konten bersama tim.",
     tech: ["Unity", "C#", "Game Design"],
-    image: "/projects/game3d.png",
+    image: "/projects/game.jpg",
     link: "",
   },
   {
     title: "Peatland Hero — SIC 2024",
     period: "2024",
-    description: "Website edukasi dan penjualan produk komoditas lahan gambut untuk kompetisi Siak Innovation Challenge 2024. Meraih penghargaan Inovasi Terbaik. Terlibat dari identifikasi masalah, perancangan solusi, pengembangan fitur, hingga presentasi ke juri.",
+    description: "Website edukasi dan penjualan produk komoditas lahan gambut untuk kompetisi Siak Innovation Challenge 2024. Meraih penghargaan Inovasi Terbaik.",
     tech: ["Web Development", "Product Design"],
-    image: "/projects/peatlandhero.png",
+    image: "/projects/sic.png",
     link: "https://peatlandhero.id",
   },
   {
     title: "Company Profile — Dimensi Hair Studio",
     period: "2024",
-    description: "Website company profile untuk barbershop lokal, menampilkan layanan, galeri hasil pangkas, profil tim barber, lokasi, dan jam operasional. Responsif untuk mobile dan desktop.",
+    description: "Website company profile untuk barbershop lokal, menampilkan layanan, galeri hasil pangkas, profil tim barber, lokasi, dan jam operasional.",
     tech: ["Laravel", "PHP", "MySQL"],
     image: "/projects/dimensihair.png",
     link: "",
@@ -88,17 +88,21 @@ function Projects() {
                 <h3>{p.title}</h3>
                 <span className="project-period">{p.period}</span>
               </div>
-              <p>{p.description}</p>
+              <p className="project-desc">{p.description}</p>
               <div className="tech-list">
                 {p.tech.map((t) => (
                   <span key={t} className="tech-badge">{t}</span>
                 ))}
               </div>
-              {p.link && (
-                <a href={p.link} target="_blank" rel="noreferrer" className="project-link">
-                  Lihat Live →
-                </a>
-              )}
+              <div className="project-footer">
+                {p.link ? (
+                  <a href={p.link} target="_blank" rel="noreferrer" className="project-btn">
+                    Lihat Live
+                  </a>
+                ) : (
+                  <span className="project-btn project-btn-disabled">Belum Live</span>
+                )}
+              </div>
             </div>
           </div>
         ))}

@@ -1,8 +1,8 @@
 const skillCards = [
   { label: "Android / Kotlin", pos: "top-left" },
-  { label: "React & Next.js", pos: "top-right" },
-  { label: "Machine Learning", pos: "bottom-left" },
-  { label: "UI/UX & Figma", pos: "bottom-right" },
+  { label: "Flutter", pos: "top-right" },
+  { label: "React & Next.js", pos: "bottom-left" },
+  { label: "Laravel & Supabase", pos: "bottom-right" },
 ]
 
 function Hero() {
