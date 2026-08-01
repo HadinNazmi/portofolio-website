@@ -20,7 +20,7 @@ function Hero() {
           <div className="hero-ring"></div>
           <div className="hero-blob"></div>
           <img
-            src="\public\images\hero.png"
+            src="/images/hero.png"
             alt="Hadin Nazmi"
             className="hero-photo"
             onError={(e) => { e.target.style.display = 'none' }}
