@@ -19,7 +19,7 @@ function About() {
   return (
     <section id="about" ref={ref} className={`about reveal reveal-up ${visible ? 'reveal-visible' : ''}`}>
       <div className="about-header">
-        <img src="/profile.jpg" alt="Hadin Nazmi" className="profile-photo" onError={(e) => { e.target.style.display = 'none' }} />
+        <img src="/images/hero.png" alt="Hadin Nazmi" className="profile-photo" onError={(e) => { e.target.style.display = 'none' }} />
         <div>
           <h2>Tentang Saya</h2>
           <p>
