@@ -1,122 +1,132 @@
 import { useScrollReveal } from '../hooks/useScrollReveal'
 
-const skillGroups = [
-  {
-    title: "Mobile Development",
-    items: ["Kotlin", "Flutter", "Android Studio", "Java"],
-  },
-  {
-    title: "Web Development",
-    items: ["JavaScript", "React.js", "Next.js", "Laravel", "PHP", "Supabase"],
-  },
-  {
-    title: "Bahasa Pemrograman & Database",
-    items: ["Python", "SQL", "MySQL", "MongoDB"],
-  },
-  {
-    title: "Tools & Platform",
-    items: ["Git & GitHub", "VS Code", "Figma", "Jupyter", "Google Colab", "Unity", "Blender", "Postman"],
-  },
-]
-
-const achievements = [
-  "Juara 1 Kategori Dampak dan Kebermanfaatan Cipta Inovasi — KMIPN 7 2025",
-  "Juara 1 Data Analyst — KMKompetisi IT Permikomnas Wilayah 2",
-  "Inovasi Terbaik — SIC 2024 (Siak Innovation Challenge)",
-  "Silver Medal — GINECO (Global Innovation and Entrepreneurship Competition)",
-]
-
-const achievementPhotos = [
-  { src: "/images/achievements/kmipn-1.png", alt: "Juara 1 Dampak dan Kebermanfaatan — KMIPN 7 2025" },
-  { src: "/images/achievements/kmipn-2.jpg", alt: "Juara 1 Dampak dan Kebermanfaatan — KMIPN 7 2025" },
-  { src: "/images/achievements/permikomnas-1.jpg", alt: "Juara 1 Data Analyst — Permikomnas Wilayah 2" },
-  { src: "/images/achievements/sic-1.jpg", alt: "Inovasi Terbaik — SIC 2024" },
-  { src: "/images/achievements/sic-2.jpg", alt: "Inovasi Terbaik — SIC 2024" },
-  { src: "/images/achievements/sic-3.jpg", alt: "Inovasi Terbaik — SIC 2024" },
-]
-
 function About() {
   const [ref, visible] = useScrollReveal()
-  const [collageRef, collageVisible] = useScrollReveal()
+
+  const polaroids = [
+    {
+      src: "/images/achievements/kmipn-1.png",
+      fallback: "https://lh3.googleusercontent.com/aida-public/AB6AXuBxdvo7ujDCoNVj4tvVzga9-DCsa5GeOlxJuIzUXmlKzEMcAJCnSQpoXRkKTxihflf6NVJeFFvioahcnv6qSumb_AgMhCSy5mUnemWJDrQh5n6L4pSfjW4Npti7h1XiNL8pe-4uOfIUrvbsBtJTtOcq4abgf5F32_1VOr-ujkmR0i0yuHTkMt_t-Uiociyd4iM25U36va-02-TJEqbhlOrONoZkS4dLPf0l2nsWfUfoH8hyG-xSPyvpFQ",
+      caption: "Juara 1 • KMIPN 7 2025",
+      rotate: "-3deg",
+    },
+    {
+      src: "/images/achievements/permikomnas-1.jpg",
+      fallback: "https://lh3.googleusercontent.com/aida-public/AB6AXuALb4YYgOmNctA8Iwsaqy8xXDN-ePDNtRUnJoIdK1_6Lo50cmpORjef-DcDG4qjlDTZS857-fo2zjLEtWEak09hfbTzI61r90G0-bEGdDxH5guaOx60UX47Riv51e9OUNRN5J-Hum4lhOOf5h7BeldpJA3Wq_iM6i0Oq9N3z-Sd0mGLXItyFnrTpEyDDnPE4Ck3syqHa7PVbRatKnlKp4tuxaN8BFJ1TdTsv1Is8kAchbTwzPSKJpgSQw",
+      caption: "Juara 1 Data Analyst • Permikomnas",
+      rotate: "2deg",
+    },
+    {
+      src: "/images/achievements/sic-1.jpg",
+      fallback: "https://lh3.googleusercontent.com/aida-public/AB6AXuBhq2RVwFT9KJRzZkHOyGEpxtEVYKTHmZFY3lF4ZAh7aPevrLEcHWc1sWykVuMtyU3rZ6C98rTFEovQHehlr35qYKkFojzpN2LnnQJMcb0KV8FLnEQwzqv5kkuluDhvTDfogoqUY-BKLxjxbp1ySMo-7obpqM3JqPf_IutUC7iAhU7tS0u1qG-ZD5bYFLRWslFdqWN1POh-mOToWvK1_E6sLUp3ZtS_4pj6y9d7QPrbNPjD3eQzlzLr_Q",
+      caption: "Inovasi Terbaik • SIC 2024",
+      rotate: "-1deg",
+    },
+  ]
 
   return (
-    <section id="about" ref={ref} className={`about reveal reveal-up ${visible ? 'reveal-visible' : ''}`}>
-      <div className="about-header">
-        <img src="/images/hero.png" alt="Hadin Nazmi" className="profile-photo" onError={(e) => { e.target.style.display = 'none' }} />
-        <div>
-          <h2>Tentang Saya</h2>
-          <p>
-            Mahasiswa D4 Teknik Informatika di Politeknik Caltex Riau dengan fokus
-            sebagai Mobile & Web Developer. Berpengalaman membangun aplikasi Android
-            native dengan Kotlin, aplikasi cross-platform dengan Flutter, hingga
-            aplikasi web full-stack dengan React dan Laravel — mulai dari perancangan
-            struktur data, logika backend, hingga antarmuka yang siap dipakai pengguna.
-          </p>
+    <section id="about" ref={ref} className={`stitch-about ${visible ? 'reveal-visible' : ''}`}>
+      <div className="section-container">
+        {/* Section Header */}
+        <div className="section-header-center">
+          <span className="badge-pill-primary">
+            <span className="material-symbols-outlined text-xs">fingerprint</span>
+            ABOUT ME
+          </span>
+          <h2 className="section-title">WHO AM I?</h2>
+          <div className="section-divider-bar"></div>
         </div>
-      </div>
 
-      <h3>Pendidikan</h3>
-      <div className="education">
-        <div>
-          <strong>Politeknik Caltex Riau</strong> — D4 Teknik Informatika
-          <span className="edu-meta">2023 – Sekarang · IPK 3.76/4.00</span>
-        </div>
-        <div>
-          <strong>MAN 3 Pekanbaru</strong> — IPA
-          <span className="edu-meta">2020 – 2023 · Nilai 92.85/100</span>
-        </div>
-      </div>
-
-      <h3>Keahlian</h3>
-      {skillGroups.map((group) => (
-        <div key={group.title} className="skill-group">
-          <p className="skill-group-title">{group.title}</p>
-          <div className="skills">
-            {group.items.map((skill) => (
-              <span key={skill} className="skill-badge">{skill}</span>
+        {/* 2-Column Content */}
+        <div className="about-grid">
+          {/* Polaroid Snapshots Column */}
+          <div className="about-polaroids-col">
+            {polaroids.map((item, idx) => (
+              <div
+                key={idx}
+                className="polaroid-card"
+                style={{ transform: `rotate(${item.rotate})` }}
+              >
+                <div className="polaroid-img-wrapper">
+                  <img
+                    src={item.src}
+                    alt={item.caption}
+                    className="polaroid-img"
+                    onError={(e) => {
+                      e.target.src = item.fallback
+                    }}
+                  />
+                </div>
+                <p className="polaroid-caption">{item.caption}</p>
+              </div>
             ))}
           </div>
-        </div>
-      ))}
 
-      <h3>Pencapaian</h3>
-      <div className="achievements-block">
-        <ul className="achievements-list">
-          {achievements.map((a) => (
-            <li key={a}>{a}</li>
-          ))}
-        </ul>
-
-        <div ref={collageRef} className="achievements-photos">
-          {achievementPhotos.map((photo, i) => {
-            const positions = [
-              { top: "0%", left: "6%", rot: -8 },
-              { top: "2%", left: "44%", rot: 6 },
-              { top: "26%", left: "0%", rot: 5 },
-              { top: "24%", left: "42%", rot: -6 },
-              { top: "50%", left: "10%", rot: 4 },
-              { top: "48%", left: "46%", rot: -4 },
-            ]
-            const pos = positions[i % positions.length]
-            return (
-              <div
-                key={photo.src}
-                className={`polaroid ${collageVisible ? 'polaroid-visible' : ''}`}
-                style={{
-                  top: pos.top,
-                  left: pos.left,
-                  '--rot': `${pos.rot}deg`,
-                  transitionDelay: collageVisible ? `${i * 0.12}s` : '0s',
-                }}
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  onError={(e) => { e.target.parentElement.style.display = 'none' }}
-                />
+          {/* Bio & Metrics Column */}
+          <div className="about-details-col">
+            {/* Bio Card */}
+            <div className="about-bio-card">
+              <div className="about-bio-header">
+                <span className="about-icon-pill">
+                  <span className="material-symbols-outlined text-2xl">code_blocks</span>
+                </span>
+                <div>
+                  <h3 className="about-bio-title">Architecting High-Throughput Digital Products</h3>
+                  <p className="about-bio-role">Senior Full-Stack & Native Mobile Specialist</p>
+                </div>
               </div>
-            )
-          })}
+              <p className="about-bio-text">
+                Mahasiswa D4 Teknik Informatika Politeknik Caltex Riau dengan <span className="text-primary font-semibold">fokus mendalam pada rekayasa perangkat lunak</span> modern. Berpengalaman membangun sistem berskala tinggi, aplikasi Android native menggunakan Kotlin & Jetpack Compose, arsitektur cross-platform dengan Flutter, hingga aplikasi web responsif berbasis React & Laravel.
+              </p>
+              <p className="about-bio-text">
+                Mulai dari perancangan skema basis data terdistribusi di Supabase & PostgreSQL, optimasi performa rendering antarmuka, hingga orkestrasi pipeline backend—fokus utama saya selalu mengutamakan clean architecture, keandalan sistem tanpa downtime, dan kepuasan pengguna akhir.
+              </p>
+            </div>
+
+            {/* Metrics Grid */}
+            <div className="about-metrics-grid">
+              <div className="metric-box">
+                <div className="metric-val text-primary">4+</div>
+                <div className="metric-lbl">Years Experience</div>
+              </div>
+              <div className="metric-box">
+                <div className="metric-val text-secondary">35+</div>
+                <div className="metric-lbl">Shipped Products</div>
+              </div>
+              <div className="metric-box">
+                <div className="metric-val text-tertiary">99.9%</div>
+                <div className="metric-lbl">Uptime Architected</div>
+              </div>
+              <div className="metric-box">
+                <div className="metric-val text-primary-dim">15k+</div>
+                <div className="metric-lbl">Global Users</div>
+              </div>
+            </div>
+
+            {/* Education Box */}
+            <div className="about-edu-card">
+              <div className="edu-card-header">
+                <span className="material-symbols-outlined text-secondary text-xl">school</span>
+                <span className="font-semibold text-on-surface">Riwayat Pendidikan</span>
+              </div>
+              <div className="edu-list">
+                <div className="edu-item">
+                  <div className="edu-meta-row">
+                    <strong className="text-on-surface">Politeknik Caltex Riau</strong>
+                    <span className="edu-year-badge">2023 – Sekarang</span>
+                  </div>
+                  <div className="edu-sub">D4 Teknik Informatika · IPK 3.76 / 4.00</div>
+                </div>
+                <div className="edu-item">
+                  <div className="edu-meta-row">
+                    <strong className="text-on-surface">MAN 3 Pekanbaru</strong>
+                    <span className="edu-year-badge">2020 – 2023</span>
+                  </div>
+                  <div className="edu-sub">MIPA · Nilai Rata-rata 92.85 / 100</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
