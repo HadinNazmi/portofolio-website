@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { LanguageProvider } from './context/LanguageContext'
 import Splash from './components/Splash'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -17,17 +18,21 @@ function App() {
   }
 
   return (
-    <div className="app-root">
-      <Navbar />
-      <main className="main-content">
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Experience />
-        <Contact />
-      </main>
-    </div>
+    <LanguageProvider>
+      <div className="w-full min-h-screen bg-surface">
+        <Navbar />
+        <main className="w-full pt-20 bg-surface">
+          <div className="flex flex-col w-full">
+            <Hero />
+            <About />
+            <Skills />
+            <Projects />
+            <Experience />
+            <Contact />
+          </div>
+        </main>
+      </div>
+    </LanguageProvider>
   )
 }
 
