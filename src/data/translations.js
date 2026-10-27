@@ -100,9 +100,9 @@ export const translations = {
       viewCode: "Source Code",
     },
     experience: {
-      badge: "ORGANIZATIONAL TRAJECTORY",
-      title: "Experience & Leadership",
-      subtitle: "Demonstrated leadership across technical divisions, governance, and national scholarship programs.",
+      badge: "ORGANIZATIONAL TRACK RECORD",
+      title: "Experience & Organization",
+      subtitle: "Demonstrated leadership across technical divisions, student governance, and national scholarship programs.",
       statusCompleted: "Completed",
       statusActive: "Active Term",
       photoCount: "Photos",
@@ -237,8 +237,8 @@ export const translations = {
     },
     experience: {
       badge: "REKAM JEJAK ORGANISASI",
-      title: "Pengalaman & Kepemimpinan",
-      subtitle: "Kepemimpinan terbukti di berbagai divisi teknologi, kepengurusan organisasi, dan program beasiswa nasional.",
+      title: "Pengalaman & Organisasi",
+      subtitle: "Rekam jejak kepemimpinan di berbagai divisi teknologi, kepengurusan organisasi mahasiswa, dan program beasiswa nasional.",
       statusCompleted: "Selesai",
       statusActive: "Masa Aktif",
       photoCount: "Foto",
