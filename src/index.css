@@ -104,3 +104,22 @@
 .animate-spin-slow {
   animation: spinSlow 40s linear infinite;
 }
+
+/* Modal Pop-up Smooth Expand Animation */
+@keyframes modalPopUp {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-modal-pop {
+  animation: modalPopUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

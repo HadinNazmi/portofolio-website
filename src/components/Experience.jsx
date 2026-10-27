@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -111,6 +112,17 @@ function Experience() {
     return () => window.removeEventListener('keydown', handleKey)
   }, [])
 
+  useEffect(() => {
+    if (activeGalleryIndex !== null) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [activeGalleryIndex])
+
   const activeExp = activeGalleryIndex !== null ? experiencesList[activeGalleryIndex] : null
 
   return (
@@ -142,12 +154,12 @@ function Experience() {
               className="bg-white/95 dark:bg-slate-900/90 rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-6 border border-slate-200/90 dark:border-slate-800 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_10px_28px_rgba(0,0,0,0.07)] hover:border-secondary/40 transition-all duration-300 group flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6"
             >
               <div className="flex items-start sm:items-center gap-3.5 sm:gap-5 w-full md:w-auto">
-                {/* Small Activity Photo as Thumbnail */}
+                {/* Small Activity Photo as Thumbnail that pops into full photo modal */}
                 <button
                   type="button"
                   onClick={() => setActiveGalleryIndex(idx)}
-                  className="relative shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/90 dark:border-slate-700 shadow-xs group/thumb focus:outline-none focus:ring-2 focus:ring-secondary cursor-pointer"
-                  title="Lihat foto kegiatan"
+                  className="relative shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/90 dark:border-slate-700 shadow-xs group/thumb focus:outline-none focus:ring-2 focus:ring-secondary cursor-pointer hover:scale-105 active:scale-95 transition-all"
+                  title="Klik untuk membuka dokumentasi kegiatan"
                 >
                   <img
                     src={exp.thumbnail}
@@ -186,7 +198,7 @@ function Experience() {
                 </div>
               </div>
 
-              {/* Status Badge only (Photo count button removed as requested) */}
+              {/* Status Badge only */}
               <div className="shrink-0 self-start md:self-center ml-auto md:ml-0">
                 <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-secondary-fixed text-on-secondary-fixed shadow-xs border border-secondary-fixed/50">
                   <span className="material-symbols-outlined text-[15px]">check_circle</span>
@@ -198,55 +210,76 @@ function Experience() {
         })}
       </div>
 
-      {/* Interactive Lightbox Modal */}
-      {activeExp && (
+      {/* Large Pop-up Gallery Modal: Rendered via portal to document.body for full-screen unclipped backdrop */}
+      {activeExp && typeof document !== 'undefined' && createPortal(
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/70 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[9999] w-screen h-screen flex items-center justify-center p-3 sm:p-6 lg:p-8 bg-black/60 backdrop-blur-sm transition-all duration-300"
           onClick={() => setActiveGalleryIndex(null)}
         >
           <div
-            className="bg-surface-container-lowest max-w-3xl w-full rounded-3xl p-5 sm:p-6 shadow-2xl overflow-hidden border border-slate-200/50"
+            className="relative max-w-6xl xl:max-w-7xl w-full bg-white dark:bg-slate-900 text-on-surface rounded-3xl p-5 sm:p-7 lg:p-8 shadow-2xl border border-slate-200/90 dark:border-slate-800 animate-modal-pop max-h-[92vh] flex flex-col justify-between overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between pb-4 border-b border-surface-container-high">
-              <div>
-                <h3 className="font-headline-sm text-headline-sm font-bold text-on-surface">
-                  {activeExp.role}
-                </h3>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">
-                  {activeExp.org} • {activeExp.period}
+            {/* Top Bar: Title & Controls */}
+            <div className="flex items-center justify-between pb-4 sm:pb-6 border-b border-surface-container-high shrink-0">
+              <div className="pr-4">
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <h3 className="font-headline-sm text-lg sm:text-2xl font-bold text-on-surface tracking-tight">
+                    {activeExp.role}
+                  </h3>
+                  <span className="bg-secondary-fixed text-on-secondary-fixed text-xs font-bold px-3 py-1 rounded-full shadow-xs">
+                    {activeExp.images.length} {t.experience.photoCount} Dokumentasi
+                  </span>
+                </div>
+                <p className="text-on-surface-variant text-xs sm:text-sm mt-1">
+                  <span className="text-secondary font-semibold">{activeExp.org}</span> • {activeExp.period}
                 </p>
               </div>
+
               <button
                 onClick={() => setActiveGalleryIndex(null)}
-                className="w-9 h-9 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center justify-center transition-colors font-bold cursor-pointer"
+                className="w-10 h-10 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center justify-center transition-colors font-bold text-lg cursor-pointer shrink-0"
                 aria-label={t.experience.closeGallery}
               >
                 ✕
               </button>
             </div>
 
-            <div className="pt-4 max-h-[65vh] overflow-y-auto">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                {activeExp.images.map((img, i) => (
-                  <div
-                    key={i}
-                    className="rounded-2xl overflow-hidden aspect-video bg-surface-container-low shadow-sm group/item"
-                  >
-                    <img
-                      src={img}
-                      alt={`${activeExp.role} foto dokumentasi ${i + 1}`}
-                      className="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-300"
-                      onError={(e) => {
-                        e.target.parentElement.style.display = 'none'
-                      }}
-                    />
+            {/* Photos Grid: All photos shown large, high-res & directly visible side-by-side */}
+            <div
+              className={`grid grid-cols-1 ${
+                activeExp.images.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3'
+              } gap-4 sm:gap-6 py-5 sm:py-6`}
+            >
+              {activeExp.images.map((img, i) => (
+                <div
+                  key={i}
+                  className="group relative rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 shadow-md border border-slate-200/80 dark:border-slate-700 h-[280px] sm:h-[380px] lg:h-[460px] flex items-center justify-center"
+                >
+                  <img
+                    src={img}
+                    alt={`${activeExp.role} foto dokumentasi ${i + 1}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      e.target.parentElement.style.display = 'none'
+                    }}
+                  />
+                  {/* Subtle photo number overlay tag */}
+                  <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md text-white text-xs font-semibold px-2.5 py-1 rounded-full opacity-80 group-hover:opacity-100 transition-opacity">
+                    Dokumentasi {i + 1}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom info bar */}
+            <div className="pt-3 border-t border-surface-container-high flex items-center justify-between text-xs text-on-surface-variant/70 shrink-0">
+              <span>{activeExp.org} • Rekam Jejak Kegiatan</span>
+              <span>Tekan Esc atau klik di luar untuk menutup</span>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   )

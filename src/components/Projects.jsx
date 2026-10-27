@@ -275,7 +275,7 @@ function Projects() {
     <section
       id="projects"
       ref={ref}
-      className={`w-full py-16 sm:py-24 relative overflow-hidden transition-all duration-700 select-none ${
+      className={`w-full py-16 sm:py-24 relative z-10 overflow-hidden transition-all duration-700 select-none ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       }`}
     >
