@@ -1,324 +1,174 @@
-import { useState } from 'react'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { useLanguage } from '../context/LanguageContext'
 
 function Contact() {
   const [ref, visible] = useScrollReveal()
-  const { t } = useLanguage()
-  const [submitted, setSubmitted] = useState(false)
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    scope: 'Full Stack Web Platform (Next.js / Node / Python)',
-    message: ''
-  })
+  const { lang, t } = useLanguage()
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
-      setFormData({
-        name: '',
-        email: '',
-        scope: 'Full Stack Web Platform (Next.js / Node / Python)',
-        message: ''
-      })
-    }, 4000)
-  }
+  const isId = lang === 'id'
 
   return (
-    <>
-      {/* 6. CONTACT SECTION & GET IN TOUCH */}
-      <section
-        id="contact"
-        ref={ref}
-        className={`max-w-[1440px] mx-auto px-margin-mobile lg:px-margin py-space-xl w-full transition-all duration-700 ${
-          visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}
-      >
-        <div className="bg-primary-container text-on-primary rounded-3xl p-space-lg lg:p-space-xl shadow-2xl relative overflow-hidden">
-          {/* Background Neon Radial */}
-          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary-fixed/20 rounded-full blur-3xl pointer-events-none"></div>
+    <footer
+      id="contact"
+      ref={ref}
+      className={`w-full bg-primary-container text-on-primary relative overflow-hidden mt-space-xl pt-10 sm:pt-14 pb-8 sm:pb-10 shadow-[0_-10px_40px_rgba(0,0,0,0.2)] transition-all duration-700 ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      }`}
+    >
+      {/* Background Subtle Ambient Glow */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-white/[0.02] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-white/[0.01] rounded-full blur-3xl pointer-events-none" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-xl relative z-10">
-            {/* Contact Left: Pitch & Direct Route */}
-            <div className="lg:col-span-5 flex flex-col justify-between gap-space-lg">
-              <div>
-                <div className="inline-flex items-center gap-2 bg-surface-container-lowest/10 px-space-sm py-1 rounded-full text-secondary-fixed font-label-sm text-label-sm mb-space-sm font-bold">
-                  <span className="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></span>
-                  <span>{t.contact.badge}</span>
-                </div>
-                <h2 className="font-display-hero text-headline-lg font-bold text-on-primary tracking-tight leading-tight">
-                  {t.contact.titlePrefix} <br />
-                  <span className="text-secondary-fixed underline decoration-secondary-fixed/30 underline-offset-8">
-                    {t.contact.titleHighlight}
-                  </span>
-                </h2>
-                <p className="font-body-md text-body-md text-on-primary-container mt-space-md">
-                  {t.contact.pitch}
-                </p>
-              </div>
-
-              {/* Direct Channels */}
-              <div className="space-y-space-sm">
-                <a
-                  href="mailto:hadinnazmi21@gmail.com"
-                  className="flex items-center gap-space-sm bg-surface-container-lowest/5 hover:bg-surface-container-lowest/10 p-space-sm rounded-2xl transition-colors block"
-                >
-                  <span className="material-symbols-outlined text-secondary-fixed text-[24px]">
-                    alternate_email
-                  </span>
-                  <div>
-                    <span className="font-label-sm text-label-sm text-on-primary-container block">
-                      {t.contact.mailLabel}
-                    </span>
-                    <p className="font-headline-sm text-headline-sm font-bold text-on-primary">
-                      hadinnazmi21@gmail.com
-                    </p>
-                  </div>
-                </a>
-
-                <div className="flex items-center gap-space-sm bg-surface-container-lowest/5 p-space-sm rounded-2xl">
-                  <span className="material-symbols-outlined text-secondary-fixed text-[24px]">
-                    location_on
-                  </span>
-                  <div>
-                    <span className="font-label-sm text-label-sm text-on-primary-container block">
-                      {t.contact.locationLabel}
-                    </span>
-                    <p className="font-body-md text-body-md font-bold text-on-primary">
-                      {t.contact.locationValue}
-                    </p>
-                  </div>
-                </div>
-              </div>
+      <div className="max-w-[1440px] mx-auto px-margin-mobile lg:px-margin relative z-10">
+        {/* Main Content Grid: Pitch on Left & 4 Unified Minimalist Channels on Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Left Side: Clean Title, Status, and Location */}
+          <div className="lg:col-span-5 flex flex-col items-start">
+            {/* Status Pill */}
+            <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-secondary-fixed mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-secondary-fixed animate-pulse"></span>
+              <span>{isId ? 'Tersedia untuk Kerja Sama' : 'Available for Collaboration'}</span>
             </div>
 
-            {/* Contact Right: Fast Form */}
-            <div className="lg:col-span-7 bg-surface-container-lowest text-on-surface p-space-lg rounded-3xl shadow-xl">
-              {submitted ? (
-                <div className="py-12 flex flex-col items-center justify-center text-center space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[32px]">check_circle</span>
-                  </div>
-                  <h3 className="font-headline-sm text-headline-sm font-bold text-on-surface">
-                    {t.contact.successMsg}
-                  </h3>
-                </div>
-              ) : (
-                <form className="space-y-space-md" onSubmit={handleSubmit}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-                    <div>
-                      <label className="block font-label-md text-label-md text-on-surface uppercase mb-1 font-bold">
-                        {t.contact.formName}
-                      </label>
-                      <input
-                        className="w-full bg-surface-container-low px-space-md py-3 rounded-xl font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary-fixed border border-transparent focus:border-secondary-fixed"
-                        placeholder="Alex Morgan"
-                        required
-                        type="text"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      />
-                    </div>
-                    <div>
-                      <label className="block font-label-md text-label-md text-on-surface uppercase mb-1 font-bold">
-                        {t.contact.formEmail}
-                      </label>
-                      <input
-                        className="w-full bg-surface-container-low px-space-md py-3 rounded-xl font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary-fixed border border-transparent focus:border-secondary-fixed"
-                        placeholder="alex@company.com"
-                        required
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      />
-                    </div>
-                  </div>
+            {/* Headline */}
+            <h2 className="font-display-hero text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-snug">
+              {isId ? 'Mari Bangun Sesuatu yang' : "Let's Build Something"}{' '}
+              <span className="text-secondary-fixed underline decoration-secondary-fixed/30 underline-offset-8">
+                {isId ? 'Luar Biasa.' : 'Extraordinary.'}
+              </span>
+            </h2>
 
-                  <div>
-                    <label className="block font-label-md text-label-md text-on-surface uppercase mb-1 font-bold">
-                      {t.contact.formScope}
-                    </label>
-                    <select
-                      className="w-full bg-surface-container-low px-space-md py-3 rounded-xl font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary-fixed border border-transparent focus:border-secondary-fixed"
-                      value={formData.scope}
-                      onChange={(e) => setFormData({ ...formData, scope: e.target.value })}
-                    >
-                      <option>Full Stack Web Platform (Next.js / Node / Python)</option>
-                      <option>Native Mobile App (Kotlin / Compose)</option>
-                      <option>Cross-Platform Mobile (Flutter)</option>
-                      <option>Backend Microservice Architecture</option>
-                      <option>Consultation &amp; Code Review</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block font-label-md text-label-md text-on-surface uppercase mb-1 font-bold">
-                      {t.contact.formMessage}
-                    </label>
-                    <textarea
-                      className="w-full bg-surface-container-low px-space-md py-3 rounded-xl font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary-fixed border border-transparent focus:border-secondary-fixed"
-                      placeholder="Describe your product milestones, technical expectations, or timelines..."
-                      required
-                      rows="4"
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    ></textarea>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-2">
-                    <span className="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1.5 font-medium">
-                      <span className="material-symbols-outlined text-[16px] text-secondary">lock</span>
-                      {t.contact.encrypted}
-                    </span>
-                    <button
-                      className="inline-flex items-center gap-space-xs bg-secondary-fixed hover:bg-secondary-fixed-dim text-on-secondary-fixed font-headline-sm text-headline-sm font-bold px-space-lg py-space-sm rounded-full shadow-md transition-all transform hover:-translate-y-0.5"
-                      type="submit"
-                    >
-                      <span>{t.contact.submit}</span>
-                      <span className="material-symbols-outlined text-[20px]">send</span>
-                    </button>
-                  </div>
-                </form>
-              )}
+            {/* Location */}
+            <div className="flex items-center gap-2 mt-3.5 text-xs sm:text-sm text-on-primary-container font-medium">
+              <span className="material-symbols-outlined text-[17px] text-white/50">location_on</span>
+              <span>Pekanbaru, Riau — Indonesia (WIB / UTC+7)</span>
             </div>
+          </div>
+
+          {/* Right Side: 4 Direct Clickable Channels with Dark Monochrome Seamless Design */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 w-full">
+            
+            {/* 1. WhatsApp Button */}
+            <a
+              href="https://wa.me/6282283884373"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between gap-3 bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/20 p-3 sm:p-3.5 rounded-xl transition-all"
+              title="Chat WhatsApp Hadin Nazmi"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-lg bg-white/5 text-white/70 group-hover:text-white group-hover:bg-white/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <span className="text-[11px] text-white/50 block font-medium">WhatsApp</span>
+                  <p className="text-xs sm:text-sm font-semibold text-white/90 group-hover:text-white transition-colors truncate">
+                    0822-8388-4373
+                  </p>
+                </div>
+              </div>
+              <span className="material-symbols-outlined text-white/30 group-hover:text-white/80 text-[17px] shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all">
+                arrow_outward
+              </span>
+            </a>
+
+            {/* 2. Email Button */}
+            <a
+              href="mailto:hadinnazmi21@gmail.com"
+              className="group flex items-center justify-between gap-3 bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/20 p-3 sm:p-3.5 rounded-xl transition-all"
+              title="Kirim Email ke hadinnazmi21@gmail.com"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-lg bg-white/5 text-white/70 group-hover:text-white group-hover:bg-white/10 flex items-center justify-center shrink-0 transition-colors">
+                  <span className="material-symbols-outlined text-[19px]">alternate_email</span>
+                </div>
+                <div className="min-w-0">
+                  <span className="text-[11px] text-white/50 block font-medium">Email</span>
+                  <p className="text-xs sm:text-sm font-semibold text-white/90 group-hover:text-white transition-colors truncate">
+                    hadinnazmi21@gmail.com
+                  </p>
+                </div>
+              </div>
+              <span className="material-symbols-outlined text-white/30 group-hover:text-white/80 text-[17px] shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all">
+                arrow_outward
+              </span>
+            </a>
+
+            {/* 3. LinkedIn Button */}
+            <a
+              href="https://www.linkedin.com/in/tengku-muhammad-hadin-nazmi-45188a411/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between gap-3 bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/20 p-3 sm:p-3.5 rounded-xl transition-all"
+              title="Buka Profil LinkedIn Hadin Nazmi"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-lg bg-white/5 text-white/70 group-hover:text-white group-hover:bg-white/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <span className="text-[11px] text-white/50 block font-medium">LinkedIn</span>
+                  <p className="text-xs sm:text-sm font-semibold text-white/90 group-hover:text-white transition-colors truncate">
+                    Hadin Nazmi
+                  </p>
+                </div>
+              </div>
+              <span className="material-symbols-outlined text-white/30 group-hover:text-white/80 text-[17px] shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all">
+                arrow_outward
+              </span>
+            </a>
+
+            {/* 4. Instagram Button */}
+            <a
+              href="https://instagram.com/hdn_nzm"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between gap-3 bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/20 p-3 sm:p-3.5 rounded-xl transition-all"
+              title="Buka Instagram @hdn_nzm"
+            >
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-lg bg-white/5 text-white/70 group-hover:text-white group-hover:bg-white/10 flex items-center justify-center shrink-0 transition-colors">
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <span className="text-[11px] text-white/50 block font-medium">Instagram</span>
+                  <p className="text-xs sm:text-sm font-semibold text-white/90 group-hover:text-white transition-colors truncate">
+                    @hdn_nzm
+                  </p>
+                </div>
+              </div>
+              <span className="material-symbols-outlined text-white/30 group-hover:text-white/80 text-[17px] shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all">
+                arrow_outward
+              </span>
+            </a>
+
           </div>
         </div>
-      </section>
 
-      {/* FOOTER */}
-      <footer className="w-full bg-surface-container-lowest mt-space-xl pt-space-xl pb-space-lg shadow-[0_-1px_12px_rgba(0,0,0,0.02)] border-t border-surface-container">
-        <div className="max-w-[1440px] mx-auto px-margin-mobile lg:px-margin">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-space-lg mb-space-xl">
-            {/* Brand column */}
-            <div className="md:col-span-5 flex flex-col items-start gap-space-sm">
-              <div className="flex items-center gap-space-xs">
-                <span className="w-2.5 h-2.5 rounded-full bg-secondary-fixed"></span>
-                <span className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                  Hadin Nazmi
-                </span>
-              </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant max-w-sm">
-                {t.footer.bio}
-              </p>
-              <div className="flex items-center gap-space-xs mt-space-xs">
-                <span className="px-space-xs py-0.5 rounded-full bg-surface-container-high font-label-sm text-label-sm text-on-surface font-semibold">
-                  {t.footer.status}
-                </span>
-              </div>
-            </div>
+        {/* Bottom Bar: Clean Copyright & Back to Top */}
+        <div className="pt-6 mt-8 sm:mt-10 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
+          <span>{t.footer.copyright}</span>
 
-            {/* Navigation links */}
-            <div className="md:col-span-2 flex flex-col gap-space-xs">
-              <span className="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-space-xs font-bold">
-                {t.footer.navTitle}
-              </span>
-              <a
-                className="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors"
-                href="#about-me"
-              >
-                {t.navbar.about}
-              </a>
-              <a
-                className="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors"
-                href="#skills"
-              >
-                {t.navbar.skills}
-              </a>
-              <a
-                className="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors"
-                href="#projects"
-              >
-                {t.navbar.projects}
-              </a>
-              <a
-                className="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors"
-                href="#experience"
-              >
-                {t.navbar.experience}
-              </a>
-            </div>
-
-            {/* Network links */}
-            <div className="md:col-span-2 flex flex-col gap-space-xs">
-              <span className="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-space-xs font-bold">
-                {t.footer.networkTitle}
-              </span>
-              <a
-                className="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors"
-                href="https://github.com/HadinNazmi"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Source Hub (GitHub)
-              </a>
-              <a
-                className="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors"
-                href="https://linkedin.com/in/tengku-muhammad-hadin"
-                target="_blank"
-                rel="noreferrer"
-              >
-                LinkedIn Network
-              </a>
-              <a
-                className="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors"
-                href="#projects"
-              >
-                Interactive Demos
-              </a>
-              <a
-                className="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors"
-                href="mailto:hadinnazmi21@gmail.com"
-              >
-                Technical Enquiries
-              </a>
-            </div>
-
-            {/* Direct Channel Box & Back to Top */}
-            <div className="md:col-span-3 flex flex-col gap-space-sm items-start md:items-end justify-between">
-              <div className="bg-primary-container p-space-md rounded-2xl w-full text-on-primary shadow-md">
-                <div className="flex items-center justify-between mb-space-xs">
-                  <span className="font-label-sm text-label-sm text-on-primary-container uppercase font-bold">
-                    {t.footer.directChannel}
-                  </span>
-                  <span className="w-2 h-2 rounded-full bg-secondary-fixed"></span>
-                </div>
-                <p className="font-headline-sm text-headline-sm text-on-primary font-bold">
-                  hadinnazmi21@gmail.com
-                </p>
-              </div>
-
-              <a
-                className="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container hover:bg-surface-container-high transition-colors font-label-md text-label-md text-on-surface font-bold"
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault()
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
-                }}
-              >
-                <span className="material-symbols-outlined text-[16px]">arrow_upward</span>
-                {t.footer.backToTop}
-              </a>
-            </div>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm bg-surface-container-low px-space-md py-space-sm rounded-full">
-            <span className="font-body-sm text-body-sm text-on-surface-variant">
-              {t.footer.copyright}
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-white/80 hover:text-white font-label-md text-xs font-semibold transition-all cursor-pointer group border border-white/5"
+          >
+            <span className="material-symbols-outlined text-[15px] group-hover:-translate-y-0.5 transition-transform">
+              arrow_upward
             </span>
-            <div className="flex items-center gap-space-md">
-              <span className="font-label-sm text-label-sm text-on-surface-variant font-medium">
-                {t.footer.architectureTag}
-              </span>
-              <div className="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></div>
-            </div>
-          </div>
+            <span>{t.footer.backToTop}</span>
+          </button>
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   )
 }
 
