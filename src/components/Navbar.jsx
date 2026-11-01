@@ -1,165 +1,186 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 
 function Navbar() {
   const { lang, setLang, t } = useLanguage()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  // Prevent background scroll when menu is open on mobile
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [menuOpen])
+
+  const menuItems = [
+    { num: '01', id: 'hero', label: lang === 'id' ? 'HOME' : 'HOME' },
+    { num: '02', id: 'about', label: lang === 'id' ? 'TENTANG' : 'ABOUT' },
+    { num: '03', id: 'skills', label: lang === 'id' ? 'KEAHLIAN' : 'SKILLS' },
+    { num: '04', id: 'projects', label: lang === 'id' ? 'PROYEK' : 'PROJECTS' },
+    { num: '05', id: 'experience', label: lang === 'id' ? 'PENGALAMAN' : 'EXPERIENCE' },
+    { num: '06', id: 'contact', label: lang === 'id' ? 'KONTAK' : 'CONTACT' },
+  ]
+
+  const handleLinkClick = (id) => {
+    setMenuOpen(false)
+    const element = document.getElementById(id)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
-      <div className="h-20 max-w-[1440px] mx-auto px-margin-mobile lg:px-margin flex items-center justify-between gap-gutter">
-        {/* Left: Brand Identity */}
-        <div className="flex items-center gap-space-sm">
+    <>
+      {/* Top Floating Header */}
+      <header className="fixed top-0 left-0 right-0 z-40 px-6 sm:px-12 py-6 flex items-center justify-between pointer-events-none">
+        {/* Left: Brand Badges */}
+        <div className="flex items-center gap-3 pointer-events-auto">
+          {/* Slash Circle Icon */}
           <a
-            href="#"
-            className="flex items-center gap-space-xs bg-surface-container-lowest px-space-sm py-space-xs rounded-full shadow-[0_1px_4px_rgba(0,0,0,0.03)]"
+            href="#hero"
+            aria-label="Home"
+            className="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm tracking-wider shadow-sm hover:scale-105 transition-transform"
           >
-            <span className="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></span>
-            <span className="font-label-lg text-label-lg text-on-surface tracking-tight font-bold">
-              {t.navbar.brand}
+            /
+          </a>
+
+          {/* Identity Pill */}
+          <a
+            href="#hero"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-outline-variant bg-surface/80 backdrop-blur-md text-on-surface hover:border-primary transition-colors shadow-sm"
+          >
+            <span className="font-label-sm uppercase tracking-widest font-semibold text-primary">
+              HADIN
+            </span>
+            <span className="text-outline text-xs">/</span>
+            <span className="font-label-sm uppercase tracking-widest text-on-surface-variant text-[11px]">
+              PORTFOLIO
             </span>
           </a>
-          <span className="hidden xl:inline-flex items-center px-space-xs py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
-            {t.navbar.tagline}
-          </span>
         </div>
 
-        {/* Center: Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-space-xs bg-surface-container-lowest/80 px-space-xs py-space-xs rounded-full shadow-[0_1px_6px_rgba(0,0,0,0.02)]">
-          <a
-            href="#about-me"
-            className="px-space-sm py-space-xs rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all"
+        {/* Right: Menu + Button */}
+        <div className="flex items-center gap-3 pointer-events-auto">
+          {/* Language Toggle Pill */}
+          <button
+            onClick={() => setLang(lang === 'en' ? 'id' : 'en')}
+            className="px-3 py-1.5 rounded-full border border-outline-variant bg-surface/80 backdrop-blur-md font-label-sm uppercase text-[11px] font-semibold text-on-surface hover:border-primary transition-colors shadow-sm"
+            type="button"
           >
-            {t.navbar.about}
-          </a>
-          <a
-            href="#skills"
-            className="px-space-sm py-space-xs rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all"
-          >
-            {t.navbar.skills}
-          </a>
-          <a
-            href="#projects"
-            className="px-space-sm py-space-xs rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all"
-          >
-            {t.navbar.projects}
-          </a>
-          <a
-            href="#experience"
-            className="px-space-sm py-space-xs rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all"
-          >
-            {t.navbar.experience}
-          </a>
-          <a
-            href="#contact"
-            className="px-space-sm py-space-xs rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all"
-          >
-            {t.navbar.contact}
-          </a>
-        </nav>
+            {lang === 'en' ? 'EN' : 'ID'}
+          </button>
 
-        {/* Right: Language Switcher, Contact CTA, Avatar & Mobile Toggle */}
-        <div className="flex items-center gap-space-sm">
-          {/* Bilingual Switcher */}
-          <div className="flex items-center bg-surface-container-low p-1 rounded-full text-on-surface-variant font-label-sm text-label-sm">
+          {/* Menu Trigger Button */}
+          <button
+            onClick={() => setMenuOpen(true)}
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-outline-variant bg-surface/80 backdrop-blur-md font-label-sm uppercase tracking-wider text-primary font-semibold hover:border-primary hover:bg-surface-container-high transition-all shadow-sm"
+            type="button"
+          >
+            <span>MENU</span>
+            <span className="text-base font-light leading-none">+</span>
+          </button>
+        </div>
+      </header>
+
+      {/* Side Drawer Overlay */}
+      <div
+        className={`fixed inset-0 z-50 transition-opacity duration-500 ${
+          menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        {/* Dark Dim Backdrop */}
+        <div
+          className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
+          onClick={() => setMenuOpen(false)}
+        />
+
+        {/* Right Slide-in Drawer */}
+        <div
+          className={`absolute top-0 right-0 bottom-0 w-full sm:w-[480px] md:w-[540px] bg-[#141517] text-white p-8 sm:p-12 flex flex-col justify-between z-10 shadow-2xl transform transition-transform duration-500 ease-out ${
+            menuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          {/* Top Bar with Close Button */}
+          <div className="flex items-center justify-between">
+            <span className="font-label-sm uppercase tracking-widest text-zinc-500">
+              NAVIGATION
+            </span>
+
             <button
-              onClick={() => setLang('en')}
-              className={`px-2.5 py-1 rounded-full transition-all font-semibold ${
-                lang === 'en'
-                  ? 'bg-surface-container-lowest text-on-surface shadow-[0_1px_2px_rgba(0,0,0,0.05)]'
-                  : 'text-on-surface-variant hover:text-on-surface'
-              }`}
+              onClick={() => setMenuOpen(false)}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-zinc-700 bg-zinc-900 text-white font-label-sm uppercase tracking-wider text-xs hover:bg-zinc-800 hover:border-white transition-colors"
+              type="button"
             >
-              EN
-            </button>
-            <button
-              onClick={() => setLang('id')}
-              className={`px-2.5 py-1 rounded-full transition-all font-semibold ${
-                lang === 'id'
-                  ? 'bg-surface-container-lowest text-on-surface shadow-[0_1px_2px_rgba(0,0,0,0.05)]'
-                  : 'text-on-surface-variant hover:text-on-surface'
-              }`}
-            >
-              ID
+              <span>CLOSE</span>
+              <span className="text-sm font-light leading-none">✕</span>
             </button>
           </div>
 
-          {/* Contact Pill CTA */}
-          <a
-            href="#contact"
-            className="group hidden sm:flex items-center gap-space-xs bg-primary text-on-primary pl-space-md pr-space-xs py-space-xs rounded-full hover:bg-primary-container transition-all shadow-[0_2px_8px_rgba(0,0,0,0.1)]"
-          >
-            <span className="font-label-md text-label-md text-on-primary">{t.navbar.contact}</span>
-            <span className="w-7 h-7 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-label-md text-label-md transition-transform group-hover:scale-105 group-hover:rotate-45">
-              ↗
-            </span>
-          </a>
+          {/* Menu Navigation Links */}
+          <nav className="my-auto py-8 flex flex-col gap-5 sm:gap-6">
+            {menuItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleLinkClick(item.id)}
+                className="group flex items-center justify-between text-left w-full border-b border-white/5 pb-3 hover:border-white/20 transition-colors"
+              >
+                <span className="font-display-xl text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-zinc-200 group-hover:text-white group-hover:translate-x-2 transition-all duration-300">
+                  {item.label}
+                </span>
+                <span className="font-mono text-xs text-zinc-500 group-hover:text-zinc-300 transition-colors">
+                  {item.num}
+                </span>
+              </button>
+            ))}
+          </nav>
 
-          {/* Profile Circle Icon */}
-          <a
-            href="#about-me"
-            className="w-8 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-primary-container transition-colors"
-            title="Hadin Profile"
-          >
-            <span className="material-symbols-outlined text-on-primary text-[18px]">person</span>
-          </a>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface"
-            aria-label="Toggle Navigation Menu"
-          >
-            <span className="material-symbols-outlined text-[20px]">
-              {mobileMenuOpen ? 'close' : 'menu'}
+          {/* Bottom Drawer Footer: Socials & Details */}
+          <div className="pt-6 border-t border-white/10 flex flex-col gap-4">
+            <span className="font-label-sm uppercase tracking-widest text-zinc-500 text-[10px]">
+              SOCIALS
             </span>
-          </button>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+              <a
+                href="#contact"
+                onClick={() => setMenuOpen(false)}
+                className="font-label-sm uppercase tracking-wider text-xs text-zinc-300 hover:text-white transition-colors"
+              >
+                RESUME
+              </a>
+              <a
+                href="https://github.com/HadinNazmi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-label-sm uppercase tracking-wider text-xs text-zinc-300 hover:text-white transition-colors"
+              >
+                GITHUB
+              </a>
+              <a
+                href="https://linkedin.com/in/hadinnazmi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-label-sm uppercase tracking-wider text-xs text-zinc-300 hover:text-white transition-colors"
+              >
+                LINKEDIN
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-label-sm uppercase tracking-wider text-xs text-zinc-300 hover:text-white transition-colors"
+              >
+                INSTAGRAM
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-surface-container-lowest border-b border-surface-container-highest px-margin-mobile py-space-md shadow-lg">
-          <nav className="flex flex-col gap-2">
-            <a
-              href="#about-me"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-space-md py-2.5 rounded-xl text-on-surface font-semibold hover:bg-surface-container transition-colors"
-            >
-              {t.navbar.about}
-            </a>
-            <a
-              href="#skills"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-space-md py-2.5 rounded-xl text-on-surface font-semibold hover:bg-surface-container transition-colors"
-            >
-              {t.navbar.skills}
-            </a>
-            <a
-              href="#projects"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-space-md py-2.5 rounded-xl text-on-surface font-semibold hover:bg-surface-container transition-colors"
-            >
-              {t.navbar.projects}
-            </a>
-            <a
-              href="#experience"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-space-md py-2.5 rounded-xl text-on-surface font-semibold hover:bg-surface-container transition-colors"
-            >
-              {t.navbar.experience}
-            </a>
-            <a
-              href="#contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-space-md py-2.5 rounded-xl text-on-surface font-semibold hover:bg-surface-container transition-colors"
-            >
-              {t.navbar.contact}
-            </a>
-          </nav>
-        </div>
-      )}
-    </header>
+    </>
   )
 }
 

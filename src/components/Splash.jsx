@@ -31,12 +31,6 @@ function Splash({ onFinish }) {
 
   return (
     <div className={`splash-container ${fadeOut ? 'splash-fade-out' : ''}`}>
-      <div className="flex items-center gap-2 mb-3">
-        <span className="w-2.5 h-2.5 rounded-full bg-secondary-fixed animate-pulse"></span>
-        <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-bold">
-          System Initializing
-        </span>
-      </div>
       <span key={index} className="splash-text">
         {greetings[index]}
       </span>

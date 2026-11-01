@@ -8,6 +8,7 @@ import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Experience from './components/Experience'
 import Contact from './components/Contact'
+import Footer from './components/Footer'
 import './index.css'
 
 function App() {
@@ -19,9 +20,9 @@ function App() {
 
   return (
     <LanguageProvider>
-      <div className="w-full min-h-screen bg-surface">
+      <div className="w-full min-h-screen bg-background text-on-surface">
         <Navbar />
-        <main className="w-full pt-20 bg-surface">
+        <main className="w-full bg-background min-h-screen">
           <div className="flex flex-col w-full">
             <Hero />
             <About />
@@ -31,6 +32,7 @@ function App() {
             <Contact />
           </div>
         </main>
+        <Footer />
       </div>
     </LanguageProvider>
   )
