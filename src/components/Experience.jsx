@@ -1,158 +1,132 @@
-import { useLanguage } from '../context/LanguageContext'
+import SectionHeader from './common/SectionHeader'
 
 function Experience() {
-  const { t } = useLanguage()
-
-  const { entry1, entry2 } = t.experience
+  const experiences = [
+    {
+      id: 'pertamina',
+      company: 'PT Pertamina Patra Niaga',
+      role: 'Programmer',
+      type: 'Internship',
+      period: 'Oct 2026 — Present',
+      duration: '2 mos',
+      location: 'Kota Dumai, Riau, Indonesia · On-site',
+      logo: '/images/pertaminalogo.png',
+      image: '/images/coverallbg.jpeg',
+      desc: 'Developing operational software, automation pipelines, and internal monitoring systems at Refinery Unit II Dumai. Streamlining data flow, reporting dashboards, and database integrations for energy refinery systems.',
+      skills: ['Python', 'FastAPI', 'React', 'PostgreSQL', 'Industrial IT'],
+    },
+    {
+      id: 'bji',
+      company: 'Bank Jatah Indonesia',
+      role: 'Web & App Developer',
+      type: 'Freelance & PKM',
+      period: 'Nov 2025 — Present',
+      duration: '1 yr 1 mo',
+      location: 'Pekanbaru, Riau, Indonesia · Hybrid',
+      logo: '/images/bankjatahlogo.png',
+      image: '/images/bji.jpeg',
+      desc: 'Engineered the native Android e-wallet mobile application featuring biometric security, ledger synchronization, and automated daily balance tracking. Built the responsive corporate company profile website.',
+      skills: ['Android Development', 'Kotlin', 'Jetpack Compose', 'Supabase', 'Tailwind CSS'],
+    },
+  ]
 
   return (
-    <section className="w-full bg-surface py-24 border-b border-outline-variant" id="experience">
-      <div className="max-w-7xl mx-auto px-gutter-mobile md:px-margin flex flex-col gap-12">
+    <section id="experience" className="py-24 sm:py-32 bg-[#F9F9F9]">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8">
         {/* Section Header */}
-        <div className="border-b border-outline-variant pb-6">
-          <span className="font-label-sm text-label-sm uppercase tracking-widest text-outline block mb-1">
-            {t.experience.tag}
-          </span>
-          <h2 className="font-headline-lg text-headline-md md:text-headline-lg text-primary">
-            {t.experience.title}
-          </h2>
-          <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">
-            {t.experience.subtitle}
-          </p>
-        </div>
+        <SectionHeader subtitle="CAREER & INTERNSHIP" title="WORK EXPERIENCE" />
 
-        {/* Split Bento Cards */}
-        <div className="flex flex-col gap-8">
-          {/* Entry 1 */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 border border-outline-variant bg-surface-container-lowest">
-            {/* Left Half: Light Editorial Content */}
-            <div className="lg:col-span-7 p-8 md:p-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-outline-variant">
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-label-sm text-label-sm uppercase tracking-widest text-outline">
-                    {entry1.roleTag}
-                  </span>
-                  <span className="font-mono text-xs text-primary font-semibold">
-                    {entry1.period}
+        {/* 2-Column Experience Cards with Full Clean Image */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-5xl mx-auto">
+          {experiences.map((exp) => (
+            <div
+              key={exp.id}
+              className="bg-white border border-gray-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col overflow-hidden group"
+            >
+              {/* Full Image Header (Unobstructed & Clean) */}
+              <div className="relative w-full aspect-[16/10] sm:aspect-video bg-gray-100 overflow-hidden">
+                <img
+                  src={exp.image}
+                  alt={exp.company}
+                  onError={(e) => {
+                    e.currentTarget.src =
+                      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80'
+                  }}
+                  className={`w-full h-full object-cover ${
+                    exp.id === 'pertamina' ? 'object-[center_18%]' : 'object-center'
+                  } group-hover:scale-105 transition-transform duration-500`}
+                />
+
+                {/* Status Badge in Top Right */}
+                <div className="absolute top-4 right-4 z-10">
+                  <span className="text-[10px] font-bold uppercase tracking-widest bg-[#222222]/85 backdrop-blur-sm text-white px-3 py-1 font-heading shadow-sm">
+                    {exp.type}
                   </span>
                 </div>
-                <h3 className="font-headline-md text-headline-sm md:text-headline-md text-primary">
-                  {entry1.role}
-                </h3>
-                <div className="font-label-md text-label-md uppercase tracking-wider text-secondary">
-                  {entry1.org}
-                </div>
-                <ul className="space-y-3 pt-4 text-on-surface-variant font-body-md text-body-md">
-                  {entry1.bullets.map((bullet, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 bg-primary mt-2 shrink-0"></span>
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
-              <div className="pt-8 flex items-center gap-3 flex-wrap">
-                {entry1.tags.map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className="font-label-sm text-label-sm uppercase px-3 py-1 bg-surface-container border border-outline-variant text-on-surface"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
 
-            {/* Right Half: Dark Slate Monochromatic Telemetry */}
-            <div className="lg:col-span-5 bg-tertiary-container text-on-tertiary p-8 md:p-12 flex flex-col justify-between relative overflow-hidden">
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <span className="font-label-sm text-label-sm uppercase tracking-widest text-zinc-400">
-                  {entry1.telemetryTitle}
-                </span>
-                <span className="material-symbols-outlined text-[18px] text-zinc-400">insights</span>
-              </div>
-              <div className="my-8 flex flex-col gap-6">
+              {/* Card Body */}
+              <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
                 <div>
-                  <span className="font-display-xl text-headline-lg text-white font-normal block">
-                    {entry1.stat1Val}
-                  </span>
-                  <span className="font-label-sm text-label-sm uppercase tracking-widest text-zinc-400">
-                    {entry1.stat1Label}
-                  </span>
-                </div>
-                <div>
-                  <span className="font-display-xl text-headline-lg text-white font-normal block">
-                    {entry1.stat2Val}
-                  </span>
-                  <span className="font-label-sm text-label-sm uppercase tracking-widest text-zinc-400">
-                    {entry1.stat2Label}
-                  </span>
-                </div>
-              </div>
-              <div className="pt-4 border-t border-white/10 font-mono text-xs text-zinc-500">
-                {entry1.hash}
-              </div>
-            </div>
-          </div>
+                  {/* Company Logo & Titles Header Row */}
+                  <div className="flex items-center space-x-3.5 mb-4">
+                    <div className="w-12 h-12 bg-white p-1.5 rounded-sm shadow-xs border border-gray-200 flex items-center justify-center shrink-0">
+                      <img
+                        src={exp.logo}
+                        alt={exp.company}
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#666666] font-heading block">
+                        {exp.company}
+                      </span>
+                      <h3 className="text-base sm:text-lg font-extrabold uppercase tracking-wide text-[#222222] font-heading">
+                        {exp.role}
+                      </h3>
+                    </div>
+                  </div>
 
-          {/* Entry 2 */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 border border-outline-variant bg-surface-container-lowest">
-            {/* Left Half: Light Editorial Content */}
-            <div className="lg:col-span-7 p-8 md:p-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-outline-variant">
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-label-sm text-label-sm uppercase tracking-widest text-outline">
-                    {entry2.roleTag}
-                  </span>
-                  <span className="font-mono text-xs text-primary font-semibold">
-                    {entry2.period}
-                  </span>
+                  {/* Period & Location */}
+                  <div className="text-xs text-[#888888] font-heading mb-4 flex flex-col space-y-1.5 border-b border-gray-100 pb-4">
+                    <div className="flex items-center space-x-2">
+                      <svg className="w-3.5 h-3.5 text-[#666666]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                      </svg>
+                      <span>
+                        <strong className="text-[#222222]">{exp.period}</strong> · {exp.duration}
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <svg className="w-3.5 h-3.5 text-[#666666]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span>{exp.location}</span>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-[#666666] leading-relaxed font-body mb-6">
+                    {exp.desc}
+                  </p>
                 </div>
-                <h3 className="font-headline-md text-headline-sm md:text-headline-md text-primary">
-                  {entry2.role}
-                </h3>
-                <div className="font-label-md text-label-md uppercase tracking-wider text-secondary">
-                  {entry2.org}
-                </div>
-                <ul className="space-y-3 pt-4 text-on-surface-variant font-body-md text-body-md">
-                  {entry2.bullets.map((bullet, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 bg-primary mt-2 shrink-0"></span>
-                      <span>{bullet}</span>
-                    </li>
+
+                {/* Skills Tags */}
+                <div className="border-t border-gray-100 pt-4 flex flex-wrap gap-2">
+                  {exp.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="text-[11px] font-bold uppercase tracking-wider bg-[#F0F0F0] text-[#222222] px-2.5 py-1 font-heading border border-[#E5E5E5]"
+                    >
+                      {skill}
+                    </span>
                   ))}
-                </ul>
-              </div>
-              <div className="pt-8 flex items-center gap-3 flex-wrap">
-                {entry2.tags.map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className="font-label-sm text-label-sm uppercase px-3 py-1 bg-surface-container border border-outline-variant text-on-surface"
-                  >
-                    {tag}
-                  </span>
-                ))}
+                </div>
               </div>
             </div>
-
-            {/* Right Half: Editorial Quote & Principle */}
-            <div className="lg:col-span-5 bg-tertiary-container text-on-tertiary p-8 md:p-12 flex flex-col justify-between">
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <span className="font-label-sm text-label-sm uppercase tracking-widest text-zinc-400">
-                  {entry2.principleTitle}
-                </span>
-                <span className="material-symbols-outlined text-[18px] text-zinc-400">format_quote</span>
-              </div>
-              <div className="my-8">
-                <blockquote className="font-quote-editorial text-body-lg md:text-headline-sm text-zinc-200 italic font-normal leading-relaxed">
-                  {entry2.quote}
-                </blockquote>
-              </div>
-              <div className="pt-4 border-t border-white/10 font-label-sm text-label-sm uppercase tracking-widest text-zinc-400">
-                {entry2.hash}
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

@@ -1,40 +1,50 @@
-import { useState } from 'react'
-import { LanguageProvider } from './context/LanguageContext'
-import Splash from './components/Splash'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
-import Skills from './components/Skills'
-import Projects from './components/Projects'
 import Experience from './components/Experience'
+import Services from './components/Services'
+import Stats from './components/Stats'
+import Works from './components/Works'
+import Organization from './components/Organization'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import './index.css'
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true)
-
-  if (showSplash) {
-    return <Splash onFinish={() => setShowSplash(false)} />
-  }
-
   return (
-    <LanguageProvider>
-      <div className="w-full min-h-screen bg-background text-on-surface">
-        <Navbar />
-        <main className="w-full bg-background min-h-screen">
-          <div className="flex flex-col w-full">
-            <Hero />
-            <About />
-            <Skills />
-            <Projects />
-            <Experience />
-            <Contact />
-          </div>
-        </main>
-        <Footer />
-      </div>
-    </LanguageProvider>
+    <div className="w-full min-h-screen bg-white text-[#666666] selection:bg-[#222222] selection:text-white">
+      {/* Navigation Bar (Fixed & Adaptive, hidden at top, slides down on scroll) */}
+      <Navbar />
+
+      <main className="w-full">
+        {/* 1. Hero Section (Auto-Slide Background + V-Cut Bottom) */}
+        <Hero />
+
+        {/* 2. About Me Section (#FFFFFF) */}
+        <About />
+
+        {/* 3. Work Experience & Internship Section (#F9F9F9) */}
+        <Experience />
+
+        {/* 4. Services Section (#FFFFFF) */}
+        <Services />
+
+        {/* 5. Stats Counter Banner (Fixed Parallax) */}
+        <Stats />
+
+        {/* 6. Portfolio / Works Section (#FFFFFF) */}
+        <Works />
+
+        {/* 7. Organizational Experience Section (#F9F9F9) */}
+        <Organization />
+
+        {/* 8. Contact Section (#FFFFFF) */}
+        <Contact />
+      </main>
+
+      {/* Footer (#1D1D1D) */}
+      <Footer />
+    </div>
   )
 }
 
