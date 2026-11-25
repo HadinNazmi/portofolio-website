@@ -1,12 +1,23 @@
 import { useState, useEffect, useRef } from 'react'
+import { projects } from '../data/projects'
+
+const heroImages = [
+  '/hero/IMG_7448.JPG',
+  '/hero/20251106_095722.jpg',
+  '/hero/1a021d19-9770-444b-9346-0a48e4923ca4.jpeg',
+  '/hero/0692853b-7011-488a-86cd-e81a841d5c62.jpeg',
+  '/hero/6ac99c9f-f65e-4638-9cc5-bae0228a8073.jpeg',
+  '/hero/7b374e17-4eeb-4ac9-bd38-17f97b3d33d4.jpeg',
+]
 
 function Stats() {
   const [hasAnimated, setHasAnimated] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const containerRef = useRef(null)
 
   const stats = [
     {
-      target: 18,
+      target: projects.length,
       suffix: '+',
       label: 'Products Shipped',
       icon: (
@@ -40,21 +51,57 @@ function Stats() {
         </svg>
       ),
     },
-    {
-      target: 1,
-      suffix: 'st',
-      label: 'KMIPN VII Winner',
-      icon: (
-        <svg className="w-8 h-8 mx-auto mb-3 stroke-current fill-none text-white/90" viewBox="0 0 24 24" strokeWidth="1.75">
-          <circle cx="12" cy="8" r="7" />
-          <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
-        </svg>
-      ),
-    },
   ]
 
   const [counts, setCounts] = useState(stats.map(() => 0))
 
+  // 1. Auto-transition very slowly and smoothly across all hero images (every 7 seconds)
+  useEffect(() => {
+    const slideTimer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length)
+    }, 7000)
+    return () => clearInterval(slideTimer)
+  }, [currentImageIndex])
+
+  // 2. Interactive scroll transition: gentle change on scroll with slow cooldown
+  useEffect(() => {
+    let lastScrollY = window.scrollY
+    let accumulatedScroll = 0
+    let lastChangeTime = Date.now()
+
+    const handleScroll = () => {
+      if (!containerRef.current) return
+      const rect = containerRef.current.getBoundingClientRect()
+      // Only active when section is visible in viewport
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0
+      if (!isVisible) return
+
+      const currentScrollY = window.scrollY
+      const delta = currentScrollY - lastScrollY
+      lastScrollY = currentScrollY
+
+      accumulatedScroll += delta
+      const now = Date.now()
+
+      // Require significant scroll (~320px) and long cooldown (2.2s) for very calm, slow changes
+      if (Math.abs(accumulatedScroll) >= 320 && now - lastChangeTime > 2200) {
+        if (accumulatedScroll > 0) {
+          // Scrolling down: advance forward
+          setCurrentImageIndex((prev) => (prev + 1) % heroImages.length)
+        } else {
+          // Scrolling up: advance backward
+          setCurrentImageIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length)
+        }
+        accumulatedScroll = 0
+        lastChangeTime = now
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // 3. Counter increment animation on intersection
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -94,16 +141,30 @@ function Stats() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full min-h-[300px] flex items-center justify-center py-20 parallax-bg"
-      style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.70), rgba(0, 0, 0, 0.70)), url('/images/coverallbg.jpeg')`,
-        backgroundPosition: 'center 25%',
-        backgroundSize: 'cover',
-        backgroundAttachment: 'fixed',
-      }}
+      className="relative w-full min-h-[320px] flex items-center justify-center py-20 overflow-hidden"
     >
-      <div className="max-w-6xl w-full mx-auto px-6 sm:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
+      {/* Background Auto-Slide & Scroll Parallax Hero Images */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden bg-black pointer-events-none">
+        {heroImages.map((src, index) => (
+          <div
+            key={src}
+            className={`absolute inset-0 w-full h-full will-change-[opacity] ${
+              currentImageIndex === index ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)), url('${src}')`,
+              backgroundPosition: 'center 30%',
+              backgroundSize: 'cover',
+              backgroundAttachment: 'fixed',
+              transition: 'opacity 2000ms ease-in-out',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Foreground Stats Content */}
+      <div className="relative z-10 max-w-5xl w-full mx-auto px-6 sm:px-8">
+        <div className="grid grid-cols-3 gap-6 sm:gap-12 text-center text-white">
           {stats.map((stat, idx) => (
             <div key={stat.label} className="flex flex-col items-center">
               {/* White minimalist icon */}
