@@ -21,9 +21,14 @@ function Footer() {
               PHONE NO.
             </h4>
             <p className="text-xs text-[#999999] font-body leading-loose">
-              +62 812-7654-3210
-              <br />
-              +62 851-9876-5432
+              <a
+                href="https://wa.me/6282283884373"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                +62 822-8388-4373
+              </a>
             </p>
           </div>
 
@@ -48,7 +53,7 @@ function Footer() {
               ADDRESS
             </h4>
             <p className="text-xs text-[#999999] font-body leading-relaxed">
-              Pekanbaru, Riau 28282
+              Pekanbaru, Riau
               <br />
               Indonesia
             </p>
